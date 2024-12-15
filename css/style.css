@@ -114,6 +114,7 @@ header p {
   text-decoration: none; /* Supprime le soulignement */
   color: inherit; /* Utilise la couleur du texte environnant */
   cursor: default; /* Change le curseur si nécessaire */
+  text-shadow: 2px 2px 5px #ba6edc;
 }
 .words::after {
   content: "";
