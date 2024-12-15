@@ -1,0 +1,263 @@
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: url("../background/bg.webp") no-repeat center center fixed;
+  background-size: cover;
+  color: #000000;
+  overflow: hidden;
+}
+
+header {
+  text-align: center;
+  padding: 50px 20px;
+  position: relative;
+}
+
+header h1 {
+  font-size: 3rem;
+  margin: 0;
+  color: #ff76a6;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+header p {
+  font-size: 1.2rem;
+  color: #d1d1e9;
+}
+
+/* Styles de la carte générale */
+.card {
+  display: flexbox;
+  background: #2e2e44;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px auto;
+  width: 300px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  transition: transform 0.2s;
+  position: relative;
+  z-index: 1;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card h2 {
+  color: #ff76a6;
+}
+
+.card a {
+  text-decoration: none;
+  color: #76a9ff;
+  font-weight: bold;
+}
+
+.card p {
+  color: #d1d1e9;
+}
+
+/* Styles spécifiques pour chaque carte */
+.card_1 {
+  position: absolute;
+  top: 300px; /* Vous pouvez ajuster la position verticale */
+  right: 200px; /* Vous pouvez ajuster la position horizontale */
+  transform: rotate(10deg); /* Change la rotation de la carte */
+}
+
+.card_2 {
+  position: absolute;
+  top: 680px; /* Position verticale différente */
+  left: 300px; /* Position horizontale différente */
+  transform: rotate(10deg); /* Rotation différente */
+}
+
+.card_3 {
+  position: absolute;
+  top: 300px; /* Position verticale différente */
+  left: 770px; /* Position horizontale différente */
+  transform: rotate(-12deg); /* Rotation différente */
+}
+
+/* From Uiverse.io by kennyotsu */
+.card_anime {
+  /* color used to softly clip top and bottom of the .words container */
+  --bg-color: transparent;
+  background-color: var(--bg-color);
+  padding: 0rem 2rem;
+  margin: auto;
+  border-radius: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader {
+  color: rgb(124, 124, 124);
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 25px;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 40px;
+  padding: 10px 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-radius: 8px;
+}
+
+.words {
+  overflow: hidden;
+  position: relative;
+  text-decoration: none; /* Supprime le soulignement */
+  color: inherit; /* Utilise la couleur du texte environnant */
+  cursor: default; /* Change le curseur si nécessaire */
+}
+.words::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    var(--bg-color) 10%,
+    transparent 30%,
+    transparent 70%,
+    var(--bg-color) 90%
+  );
+  z-index: 20;
+}
+
+.word {
+  display: block;
+  height: 100%;
+  padding-left: 6px;
+  color: #6e89a7;
+  animation: spin_4991 90s infinite;
+}
+
+.word a {
+  text-decoration: none; /* Supprime le soulignement */
+  color: inherit; /* Utilise la couleur du texte environnant */
+  cursor:default; /* Change le curseur si nécessaire */
+}
+
+@keyframes spin_4991 {
+  25% {
+    -webkit-transform: translateY(-102%);
+    transform: translateY(-102%);
+  }
+
+  35% {
+    -webkit-transform: translateY(-100%);
+    transform: translateY(-100%);
+  }
+
+  50% {
+    -webkit-transform: translateY(-202%);
+    transform: translateY(-202%);
+  }
+
+  60% {
+    -webkit-transform: translateY(-200%);
+    transform: translateY(-200%);
+  }
+
+  75% {
+    -webkit-transform: translateY(-302%);
+    transform: translateY(-302%);
+  }
+
+  85% {
+    -webkit-transform: translateY(-300%);
+    transform: translateY(-300%);
+  }
+
+  95% {
+    -webkit-transform: translateY(-402%);
+    transform: translateY(-402%);
+  }
+
+  100% {
+    -webkit-transform: translateY(-400%);
+    transform: translateY(-400%);
+  }
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background: transparent;
+  position: fixed; /* Fixe le footer en bas de l'écran */
+  bottom: 0; /* Place-le tout en bas */
+  width: 100%; /* Prend toute la largeur de l'écran */
+  color: #ff76a6;
+  z-index: 1;
+}
+
+footer a {
+  color: #76a9ff;
+}
+
+.snowflake {
+  position: absolute;
+  top: -10px;
+  color: white;
+  font-size: 1rem;
+  pointer-events: none;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+  }
+}
+
+.toggle-button {
+  position: fixed;
+  top: 20px;
+  background: #ff76a6;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  z-index: 2;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-button:hover {
+  background-color: #ff98c2;
+}
+
+.snow-toggle {
+  right: 80px;
+}
+
+.music-toggle {
+  right: 20px;
+}
+
+audio {
+  display: none;
+}
+
+.pdp {
+  max-width: 12%; /* Augmente la taille de l'image, ajustez la valeur selon vos besoins */
+  height: auto; /* Laisse la hauteur s'ajuster proportionnellement */
+  border-radius: 50%; /* Garde l'image sous forme circulaire */
+  display: flex; /* Assure un affichage en mode flex */
+  position: absolute; /* Positionne l'image de manière absolue par rapport à son parent */
+  top: 200px; /* Déplace l'image à 200px du haut de l'écran, ajustez si nécessaire */
+  left: 200px; /* Déplace l'image à 200px de la gauche de l'écran, ajustez si nécessaire */
+  z-index: 2; /* Garantit que l'image reste au-dessus des autres éléments */
+}
+
+/*! media query */
