@@ -68,8 +68,8 @@ header p {
 
 .card_2 {
   position: absolute;
-  top: 680px; /* Position verticale différente */
-  left: 300px; /* Position horizontale différente */
+  top: 660px; /* Position verticale différente */
+  left: 290px; /* Position horizontale différente */
   transform: rotate(10deg); /* Rotation différente */
 }
 
@@ -190,7 +190,7 @@ footer {
   background: transparent;
   position: fixed; /* Fixe le footer en bas de l'écran */
   bottom: 0; /* Place-le tout en bas */
-  width: 30%; /* Prend toute la largeur de l'écran */
+  width: 100%; /* Prend toute la largeur de l'écran */
   color: #ff76a6;
   z-index: 1;
 }
