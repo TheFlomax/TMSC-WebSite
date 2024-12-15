@@ -190,7 +190,7 @@ footer {
   background: transparent;
   position: fixed; /* Fixe le footer en bas de l'écran */
   bottom: 0; /* Place-le tout en bas */
-  width: 100%; /* Prend toute la largeur de l'écran */
+  width: 30%; /* Prend toute la largeur de l'écran */
   color: #ff76a6;
   z-index: 1;
 }
