@@ -1,22 +1,64 @@
-body {
+/* Modification principale pour éviter le dépassement des cartes sous le footer */
+html, body {
+  height: 100%;
   margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: hidden;
   font-family: "Poppins", sans-serif;
-  background: url("../background/bg.webp") no-repeat center center fixed;
+}
+
+body {
+  background-image: url("../background/bg.webp");
   background-size: cover;
-  color: #000000;
-  overflow: hidden;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: #ffffff;
+  position: relative;
+  padding-bottom: 100px; /* Espace pour le footer */
+  --primary-color: #ff76a6;
+  --secondary-color: #76a9ff;
+  --card-bg: #2e2e44;
+  --card-text: #e6e6ff;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-color) var(--card-bg);
+}
+
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body::-webkit-scrollbar-track {
+  background: var(--card-bg);
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color);
+  border-radius: 10px;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: -1;
 }
 
 header {
   text-align: center;
   padding: 50px 20px;
   position: relative;
+  z-index: 1;
 }
 
 header h1 {
   font-size: 3rem;
   margin: 0;
-  color: #ff76a6;
+  color: var(--primary-color);
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
 }
 
@@ -25,63 +67,86 @@ header p {
   color: #d1d1e9;
 }
 
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: calc(100% - 200px);
+  padding-bottom: 150px; /* Espace supplémentaire pour éviter le footer */
+}
+
 /* Styles de la carte générale */
 .card {
-  display: flexbox;
-  background: #2e2e44;
-  border-radius: 12px;
+  background-color: rgba(0, 0, 0, 0.65);
+  border-radius: 15px;
   padding: 20px;
-  width: 300px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  text-align: center;
-  transition: transform 0.2s;
+  margin: 20px;
+  color: #ffffff;
+  box-shadow: 0 4px 8px rgba(255, 118, 166, 0.2);
+  border: 1px solid rgba(255, 118, 166, 0.3);
+  max-width: 500px;
+  width: 100%;
   position: relative;
   z-index: 1;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  backdrop-filter: blur(5px);
+  text-align: center;
 }
 
 .card:hover {
   transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
 .card h2 {
-  color: #ff76a6;
+  color: var(--primary-color);
+  margin-top: 0;
 }
 
 .card a {
   text-decoration: none;
-  color: #76a9ff;
+  color: var(--secondary-color);
   font-weight: bold;
+  transition: color 0.2s ease;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.card a:hover {
+  color: #a8c7ff;
+  background: rgba(118, 169, 255, 0.1);
 }
 
 .card p {
-  color: #d1d1e9;
+  color: var(--card-text);
+  line-height: 1.5;
 }
 
 /* Styles spécifiques pour chaque carte */
 .card_1 {
   position: absolute;
-  top: 300px;
-  right: 200px;
-  transform: rotate(10deg);
+  left: 10%;
+  top: 0;
+  transform: rotate(5deg);
 }
 
 .card_2 {
   position: absolute;
-  top: 660px;
-  left: 290px;
-  transform: rotate(10deg);
+  right: 10%;
+  top: 30%;
+  transform: rotate(-5deg);
 }
 
 .card_3 {
   position: absolute;
-  top: 300px;
-  left: 770px;
-  transform: rotate(-12deg);
+  left: 20%;
+  top: 60%;
+  transform: rotate(5deg);
 }
 
 /* From Uiverse.io by kennyotsu */
 .card_anime {
-  /* color used to softly clip top and bottom of the .words container */
   --bg-color: transparent;
   background-color: var(--bg-color);
   padding: 0rem 2rem;
@@ -93,16 +158,13 @@ header p {
 }
 
 .loader {
-  color: rgb(124, 124, 124);
+  color: rgb(150, 150, 150);
   font-family: "Poppins", sans-serif;
   font-weight: 500;
   font-size: 25px;
-  -webkit-box-sizing: content-box;
   box-sizing: content-box;
   height: 40px;
   padding: 10px 10px;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   border-radius: 8px;
 }
@@ -133,80 +195,90 @@ header p {
   display: block;
   height: 100%;
   padding-left: 6px;
-  color: #6e89a7;
+  color: #8baac7;
   animation: spin_4991 90s infinite;
 }
 
 .word a {
   text-decoration: none;
   color: inherit;
-  cursor: default;
+  cursor: pointer;
+  transition: text-shadow 0.3s ease;
+}
+
+.word a:hover {
+  text-shadow: 0 0 8px #ba6edc;
 }
 
 @keyframes spin_4991 {
   25% {
-    -webkit-transform: translateY(-102%);
     transform: translateY(-102%);
   }
 
   35% {
-    -webkit-transform: translateY(-100%);
     transform: translateY(-100%);
   }
 
   50% {
-    -webkit-transform: translateY(-202%);
     transform: translateY(-202%);
   }
 
   60% {
-    -webkit-transform: translateY(-200%);
     transform: translateY(-200%);
   }
 
   75% {
-    -webkit-transform: translateY(-302%);
     transform: translateY(-302%);
   }
 
   85% {
-    -webkit-transform: translateY(-300%);
     transform: translateY(-300%);
   }
 
   95% {
-    -webkit-transform: translateY(-402%);
     transform: translateY(-402%);
   }
 
   100% {
-    -webkit-transform: translateY(-400%);
     transform: translateY(-400%);
   }
 }
 
 footer {
-  text-align: center;
-  padding: 20px;
-  background: transparent;
   position: fixed;
   bottom: 0;
   width: 100%;
-  color: #ff76a6;
-  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 10px;
+  text-align: center;
+  font-size: 0.8rem;
+  z-index: 1000; /* Assurer que le footer reste au-dessus */
+}
+
+footer:hover {
+  background: rgba(0, 0, 0, 0.5);
 }
 
 footer a {
-  color: #76a9ff;
+  color: var(--secondary-color);
+  transition: color 0.2s ease;
+}
+
+footer a:hover {
+  color: #a8c7ff;
+  text-decoration: underline;
 }
 
 .snowflake {
-  position: absolute;
+  position: fixed;
   top: -10px;
   color: white;
   font-size: 1rem;
   pointer-events: none;
   animation: fall linear infinite;
+  z-index: 0;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+  will-change: transform;
 }
 
 @keyframes fall {
@@ -218,10 +290,17 @@ footer a {
   }
 }
 
-.toggle-button {
+.controls {
   position: fixed;
   top: 20px;
-  background: #ff76a6;
+  right: 20px;
+  z-index: 10;
+  display: flex;
+  gap: 10px;
+}
+
+.toggle-button {
+  background: var(--primary-color);
   color: white;
   border: none;
   padding: 10px 15px;
@@ -230,116 +309,283 @@ footer a {
   font-family: "Poppins", sans-serif;
   font-weight: bold;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  z-index: 2;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .toggle-button:hover {
   background-color: #ff98c2;
+  transform: translateY(-2px);
 }
 
-.snow-toggle {
-  right: 80px;
+.toggle-button:active {
+  transform: translateY(1px);
 }
 
-.music-toggle {
-  right: 20px;
+.pdp-container {
+  display: inline-block;
+  position: absolute;
+  top: 200px;
+  left: 200px;
+  z-index: 2;
+  transition: transform 0.3s ease;
+  width: 12%;
+  max-width: 150px;
+}
+
+.pdp-container:hover {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.pdp {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+  border: 3px solid var(--primary-color);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  display: block;
 }
 
 audio {
   display: none;
 }
 
-.pdp {
-  max-width: 12%;
-  height: auto;
-  border-radius: 50%;
-  display: flex;
-  position: absolute;
-  top: 200px;
-  left: 200px;
-  z-index: 2;
-}
-
 /* Media Queries pour la responsivité */
 @media screen and (max-width: 1200px) {
-  .card {
+  html, body {
+    overflow-y: auto;
+  }
+
+  .card_1 {
     position: relative;
+    left: auto;
+    top: auto;
+    margin-top: 50px;
+    transform: none; /* Annuler la rotation sur les petits écrans */
+  }
+
+  .card_2 {
+    position: relative;
+    right: auto;
+    top: auto;
+    transform: none; /* Annuler la rotation sur les petits écrans */
+  }
+
+  .card_3 {
+    position: relative;
+    left: auto;
+    top: auto;
+    margin-bottom: 50px;
+    transform: none; /* Annuler la rotation sur les petits écrans */
+  }
+
+  .pdp-container {
+    position: relative;
+    display: block;
+    margin: 30px auto;
     top: auto;
     left: auto;
-    right: auto;
-    transform: none;
-    margin: 20px auto;
+    text-align: center;
   }
 
-  .card:hover {
-    transform: scale(1.02);
-  }
-
-  .container {
-    gap: 20px;
-    height: auto;
+  .pdp {
+    max-width: 150px;
+    width: 25vw;
   }
 }
 
 @media screen and (max-width: 768px) {
-  body {
-    padding-bottom: 150px;
+  .container {
+    padding-bottom: 250px;
   }
-
+  
   header {
     margin-bottom: 60px;
   }
 
-  .container {
-    padding: 10px;
+  header h1 {
+    font-size: 2.2rem;
   }
 
-  .pdp {
+  .pdp-container {
     position: fixed;
-    bottom: auto;
     top: 150px;
     left: 50%;
     transform: translateX(-50%);
+    margin: 0;
+  }
+
+  .pdp {
     width: 100px;
     height: 100px;
-    right: auto;
-    z-index: 3;
+    border-width: 2px;
+  }
+
+  .pdp-container:hover {
+    transform: translateX(-50%) scale(1.1);
   }
 
   .card_anime {
     margin-top: 60px;
   }
 
-  footer {
+  .footer {
+    padding: 15px 10px;
     height: 100px;
-    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .toggle-button {
+    padding: 8px 12px;
+    font-size: 0.9rem;
   }
 }
 
 @media screen and (max-width: 480px) {
-  body {
-    padding-bottom: 180px;
+  .container {
+    padding-bottom: 300px;
   }
 
   header {
     margin-bottom: 40px;
+    padding: 30px 15px;
+  }
+
+  header h1 {
+    font-size: 1.8rem;
+  }
+
+  .pdp-container {
+    top: 120px;
   }
 
   .pdp {
-    top: 120px;
     width: 80px;
     height: 80px;
   }
 
   .card_anime {
     margin-top: 40px;
+    padding: 0 1rem;
   }
 
-  footer {
+  .loader {
+    font-size: 18px;
+  }
+
+  .card {
+    padding: 15px;
+  }
+
+  .card h2 {
+    font-size: 1.3rem;
+  }
+
+  .footer {
     height: 120px;
     padding: 10px;
+  }
+
+  .controls {
+    top: 10px;
+    right: 10px;
+    gap: 5px;
+  }
+
+  .toggle-button {
+    padding: 6px 10px;
+    font-size: 0.8rem;
   }
 }
 
 /*! media query */
+
+/* Media query pour écrans larges (4K) */
+@media screen and (min-width: 2560px) {
+  .card_1 {
+    left: 15%;
+    top: 5%;
+    transform: rotate(5deg);
+  }
+
+  .card_2 {
+    right: 15%;
+    top: 30%;
+    transform: rotate(-5deg);
+  }
+
+  .card_3 {
+    left: 25%;
+    top: 55%;
+    transform: rotate(5deg);
+  }
+  
+  .card {
+    max-width: 700px;
+    padding: 30px;
+    margin: 30px;
+  }
+  
+  .pdp-container {
+    position: absolute;
+    top: 200px;
+    left: 200px;
+    width: 150px;
+  }
+}
+
+/* Media query pour 1080p pour éviter le chevauchement du footer */
+@media (min-width: 1200px) and (max-width: 1920px) {
+  html, body {
+    overflow-y: auto;
+    height: auto;
+  }
+
+  body {
+    padding-bottom: 60px;
+  }
+  
+  .container {
+    min-height: auto;
+    padding: 0 20% 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .pdp-container {
+    position: fixed;
+    top: 100px;
+    left: 120px;
+    right: auto;
+    margin: 0;
+    width: 150px;
+    max-width: none;
+    z-index: 5;
+  }
+  
+  .pdp {
+    width: 100%;
+    height: auto;
+  }
+  
+  .card_1, .card_2, .card_3 {
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    transform: none;
+    margin: 20px auto;
+    width: 70%;
+    max-width: 600px;
+  }
+  
+  .card_1 {
+    margin-top: 30px;
+  }
+  
+  .card_3 {
+    margin-bottom: 60px;
+  }
+}
