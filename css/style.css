@@ -281,12 +281,69 @@ footer a:hover {
   will-change: transform;
 }
 
+/* Styles pour les éléments d'effet */
+.effect-element {
+  position: fixed;
+  top: -10px;
+  color: white;
+  font-size: 1rem;
+  pointer-events: none;
+  z-index: 0;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+  will-change: transform;
+}
+
+/* Effet de neige (nuit) */
+.snow {
+  animation: fall linear infinite;
+}
+
+/* Effet de feuille (après-midi) */
+.leaf {
+  animation: leafFall linear infinite;
+  filter: hue-rotate(15deg);
+}
+
+/* Effet de rayon de soleil (matin) */
+.sunbeam {
+  animation: sunbeamRise linear infinite;
+  color: #ffde82;
+  text-shadow: 0 0 10px #ffde82;
+}
+
 @keyframes fall {
   0% {
     transform: translateY(0) rotate(0deg);
   }
   100% {
     transform: translateY(100vh) rotate(360deg);
+  }
+}
+
+@keyframes leafFall {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(50vh) translateX(20px) rotate(180deg);
+  }
+  100% {
+    transform: translateY(100vh) translateX(-20px) rotate(360deg);
+  }
+}
+
+@keyframes sunbeamRise {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateY(30vh) scale(1.5);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(100vh) scale(0.8);
+    opacity: 0;
   }
 }
 

@@ -30,6 +30,10 @@
     <link rel="icon" type="image/png" href="img/favicon.png">
     <link rel="preload" href="background/bg.webp" as="image" />
     <link rel="preload" href="music/music.flac" as="audio" />
+    <link rel="preload" href="background/morning.webp" as="image" />
+    <link rel="preload" href="background/afternoon.webp" as="image" />
+    <link rel="preload" href="music/morning.flac" as="audio" />
+    <link rel="preload" href="music/afternoon.flac" as="audio" />
   </head>
   <body>
     <div class="overlay"></div>
@@ -40,10 +44,10 @@
         <div class="loader">
           <div class="words">
             <span class="word">Profiter juste.</span>
-            <span class="word">Aimer vous la musique ?</span>
+            <span class="word">Aimez-vous la musique ?</span>
             <span class="word"><a href="https://github.com/KDA-sparkle" target="_blank">Grande soeur nous regarde.</a></span>
             <span class="word"
-              >TMSC est une entreprise fictive mais encré dans votre
+              >TMSC est une entreprise fictive mais ancrée dans votre
               esprit.</span
             >
             <span class="word">OwO</span>
@@ -54,7 +58,7 @@
 
     <div class="container">
       <div class="card card_1">
-        <h2>A propos de moi 🌸</h2>
+        <h2>À propos de moi 🌸</h2>
 
         <p>
           <svg
@@ -91,11 +95,11 @@
         
         <p>
           Merci de vous intéresser ou de vous être perdu sur TrapMeSenpai Company,
-          Nous sommes heureux de vous accueillir ! Comme vous devez vous en douter, rien n'est vraiment sérieux.
+          nous sommes heureux de vous accueillir ! Comme vous devez vous en douter, rien n'est vraiment sérieux
           et cela n'a pas vraiment besoin de l'être uwu
         </p>
         <p>
-          J'espère néanmoins que cette découverte vous plait et que TMSC grandira.
+          J'espère néanmoins que cette découverte vous plaît et que TMSC grandira.
           Have a nice day !
         </p>
       </div>
@@ -119,9 +123,9 @@
 
     <div class="controls">
       <button
-        class="toggle-button snow-toggle"
-        onclick="toggleSnow()"
-        aria-label="Toggle snow animation"
+        class="toggle-button effect-toggle"
+        onclick="toggleEffect()"
+        aria-label="Toggle visual effects"
       >
         ❄️
       </button>
@@ -140,37 +144,134 @@
     </audio>
 
     <script>
-      let snowEnabled = true;
-      let snowInterval;
+      let effectEnabled = true;
+      let effectInterval;
       const audio = document.getElementById("background-music");
-
-      function createSnowflake() {
-        const snowflake = document.createElement("div");
-        snowflake.classList.add("snowflake");
-        snowflake.innerHTML = "❄";
-        snowflake.style.left = Math.random() * 100 + "vw";
-        snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
-        snowflake.style.fontSize = Math.random() * 1 + 0.8 + "rem";
-
-        document.body.appendChild(snowflake);
-
+      
+      // Configuration des thèmes selon l'heure
+      const themes = {
+        morning: {
+          background: "background/morning.webp",
+          music: "music/morning.flac",
+          artistName: "Afe̤ra",
+          artistLink: "https://www.pinterest.com/xv_afera/",
+          musicTitle: "NOWを by 月ノ美兎",
+          effect: "sunbeam",
+          effectIcon: "☀️",
+          effectContent: "☀"
+        },
+        afternoon: {
+          background: "background/afternoon.webp",
+          music: "music/afternoon.flac",
+          artistName: "2baroni",
+          artistLink: "https://www.reddit.com/r/PokemonROMhacks/comments/oz6q37/heres_collis_city_brights_peak_maps_of_pok%C3%A9mon/",
+          musicTitle: "Akanes Daydream from Ranma ½ - Full OST",
+          effect: "leaf",
+          effectIcon: "🍃",
+          effectContent: "🍃"
+        },
+        night: {
+          background: "background/bg.webp", // L'image actuelle
+          music: "music/music.flac", // La musique actuelle
+          artistName: "Klegs",
+          artistLink: "https://www.pixiv.net/en/users/20345732",
+          musicTitle: "Sine by trxxshed & Lomtre",
+          effect: "snow",
+          effectIcon: "❄️",
+          effectContent: "❄"
+        }
+      };
+      
+      // Fonction pour déterminer le thème actuel selon l'heure
+      function getCurrentTheme() {
+        const hour = new Date().getHours();
+        
+        if (hour >= 6 && hour < 12) {
+          return themes.morning;
+        } else if (hour >= 12 && hour < 18) {
+          return themes.afternoon;
+        } else {
+          return themes.night;
+        }
+      }
+      
+      // Fonction pour appliquer le thème
+      function applyTheme() {
+        const currentTheme = getCurrentTheme();
+        
+        // Changer l'arrière-plan
+        document.body.style.backgroundImage = `url('${currentTheme.background}')`;
+        
+        // Changer la musique (si elle est en cours de lecture)
+        const wasPlaying = !audio.paused;
+        audio.src = currentTheme.music;
+        if (wasPlaying) {
+          audio.play();
+        }
+        
+        // Mettre à jour les crédits dans le footer
+        document.querySelector('.footer p:first-child').innerHTML = `Art by <a href="${currentTheme.artistLink}" target="_blank">${currentTheme.artistName}</a>`;
+        document.querySelector('.footer p:last-child').innerHTML = `Music : ${currentTheme.musicTitle}`;
+        
+        // Changer l'effet visuel
+        updateVisualEffect(currentTheme);
+      }
+      
+      // Fonction pour mettre à jour l'effet visuel
+      function updateVisualEffect(theme) {
+        // Arrêter tous les effets actuels
+        clearInterval(effectInterval);
+        document.querySelectorAll(".effect-element").forEach(el => el.remove());
+        
+        // Mettre à jour l'icône du bouton
+        const toggleButton = document.querySelector(".effect-toggle");
+        toggleButton.textContent = effectEnabled ? theme.effectIcon : "⛔";
+        
+        // Démarrer le nouvel effet si activé
+        if (effectEnabled) {
+          effectInterval = setInterval(() => createEffectElement(theme), 200);
+        }
+      }
+      
+      // Fonction pour créer un élément d'effet selon le thème
+      function createEffectElement(theme) {
+        const element = document.createElement("div");
+        element.classList.add("effect-element", theme.effect);
+        element.innerHTML = theme.effectContent;
+        element.style.left = Math.random() * 100 + "vw";
+        
+        // Personnalisation selon le type d'effet
+        if (theme.effect === "snow") {
+          element.style.animationDuration = Math.random() * 3 + 2 + "s";
+          element.style.fontSize = Math.random() * 1 + 0.8 + "rem";
+        } else if (theme.effect === "leaf") {
+          element.style.animationDuration = Math.random() * 5 + 3 + "s";
+          element.style.fontSize = Math.random() * 0.8 + 0.6 + "rem";
+          element.style.transform = `rotate(${Math.random() * 360}deg)`;
+        } else if (theme.effect === "sunbeam") {
+          element.style.animationDuration = Math.random() * 4 + 3 + "s";
+          element.style.fontSize = Math.random() * 1.2 + 1 + "rem";
+          element.style.opacity = Math.random() * 0.5 + 0.2;
+        }
+        
+        document.body.appendChild(element);
+        
         setTimeout(() => {
-          snowflake.remove();
+          element.remove();
         }, 5000);
       }
-
-      function toggleSnow() {
-        snowEnabled = !snowEnabled;
-        const toggleButton = document.querySelector(".snow-toggle");
-        toggleButton.textContent = snowEnabled ? "⛔" : "❄️";
-
-        if (snowEnabled) {
-          snowInterval = setInterval(createSnowflake, 200);
+      
+      function toggleEffect() {
+        effectEnabled = !effectEnabled;
+        const currentTheme = getCurrentTheme();
+        const toggleButton = document.querySelector(".effect-toggle");
+        toggleButton.textContent = effectEnabled ? currentTheme.effectIcon : "⛔";
+        
+        if (effectEnabled) {
+          effectInterval = setInterval(() => createEffectElement(currentTheme), 200);
         } else {
-          clearInterval(snowInterval);
-          document
-            .querySelectorAll(".snowflake")
-            .forEach((snowflake) => snowflake.remove());
+          clearInterval(effectInterval);
+          document.querySelectorAll(".effect-element").forEach(el => el.remove());
         }
       }
 
@@ -185,13 +286,21 @@
         }
       }
 
-      // Start snow by default
-      snowInterval = setInterval(createSnowflake, 200);
+      // Start effects by default
+      const currentTheme = getCurrentTheme();
+      effectInterval = setInterval(() => createEffectElement(currentTheme), 200);
 
       // Auto-play music if supported
       window.addEventListener("load", () => {
         audio.volume = 0.5; // Set volume to 50%
         audio.loop = true;
+        
+        // Appliquer le thème en fonction de l'heure
+        applyTheme();
+        
+        // Vérifier le thème toutes les heures
+        setInterval(applyTheme, 3600000); // 3600000 ms = 1 heure
+        
         audio
           .play()
           .catch(() => console.log("Music auto-play blocked by browser."));
